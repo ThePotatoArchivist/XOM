@@ -1,9 +1,6 @@
 package archives.tater.xom;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.item.ItemPlacementContext;
@@ -96,7 +93,7 @@ public class ConeBlock extends Block {
         super.onStateReplaced(state, world, pos, newState, moved);
         if (newState.isOf(this)) return;
         var down = world.getBlockState(pos.down());
-        if (down.isOf(this) && down.get(STACKED) >= 3)
+        if (down.isOf(this) && down.get(STACKED) > 3)
             if (state.get(STACKED) < 3)
                 world.breakBlock(pos.down(), true);
             else

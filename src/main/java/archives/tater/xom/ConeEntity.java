@@ -6,7 +6,10 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.hit.HitResult.Type;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -32,14 +35,49 @@ public class ConeEntity extends FallingBlockEntity {
         return (livingEntity.getType().isIn(Xom.CAN_WEAR_CONE) || (livingEntity instanceof MobEntity mob && mob.canPickUpLoot())) && livingEntity.getEquippedStack(EquipmentSlot.HEAD).isEmpty();
     }
 
-    @Override
-    public void tick() {
-        var hit = ProjectileUtil.getCollision(this, ConeEntity::canEquip);
+    private boolean onHit(HitResult hit) {
+        if (hit.getType() == Type.MISS) return false;
+
         if (hit instanceof EntityHitResult entityHit) {
             ((LivingEntity) entityHit.getEntity()).equipStack(EquipmentSlot.HEAD, getBlockState().getBlock().asItem().getDefaultStack());
+            return true;
+        }
+
+        if (!(hit instanceof BlockHitResult blockHit)) return false;
+        var pos = blockHit.getBlockPos();
+
+        if (getY() <= pos.getY()) return false;
+
+        var hitState = getWorld().getBlockState(pos);
+        if (!hitState.isOf(Xom.CONE_BLOCK)) return false;
+
+        var stacked = hitState.get(ConeBlock.STACKED);
+        if (stacked >= 6) return false;
+
+        var offsetState = getWorld().getBlockState(pos.up());
+        if (!offsetState.isOf(Xom.CONE_BLOCK) && !offsetState.isReplaceable()) return false;
+
+        getWorld().setBlockState(pos, hitState.with(ConeBlock.STACKED, stacked + 1));
+        if (stacked >= 3 && !offsetState.isOf(Xom.CONE_BLOCK))
+            getWorld().setBlockState(pos.up(), Xom.CONE_BLOCK.getDefaultState().with(ConeBlock.STACKED, 0));
+
+        playSound(XomSounds.CONE_LAND, 1f, 1f);
+
+        return true;
+    }
+
+    @Override
+    public void tick() {
+        if (onHit(ProjectileUtil.getCollision(this, ConeEntity::canEquip))) {
             discard();
             return;
         }
         super.tick();
+    }
+
+    @Override
+    public void onLanding() {
+        super.onLanding();
+        playSound(XomSounds.CONE_FALLS, 1f, 1f);
     }
 }

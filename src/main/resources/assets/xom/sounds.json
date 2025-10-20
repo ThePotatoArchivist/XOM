@@ -42,13 +42,13 @@
     "sounds": [
       "xom:cone_drop"
     ],
-    "subtitle": "subtitles.block.xom.cone.land"
+    "subtitle": "subtitles.entity.xom.cone.land"
   },
   "block.cone.falls": {
     "sounds": [
       { "name": "xom:cone_fall", "volume": 0.4 }
     ],
-    "subtitle": "subtitles.block.xom.cone.falls"
+    "subtitle": "subtitles.entity.xom.cone.falls"
   },
   "block.cone.equip": {
     "sounds": [
@@ -57,6 +57,6 @@
       { "name": "xom:cone_drop", "pitch": 1.0 },
       { "name": "xom:cone_drop", "pitch": 1.1 }
     ],
-    "subtitle": "subtitles.block.generic.footsteps"
+    "subtitle": "subtitles.item.xom.cone.equip"
   }
 }

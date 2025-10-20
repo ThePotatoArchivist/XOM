@@ -30,4 +30,6 @@ public class XomSounds {
     public static final BlockSoundGroup CONE_SOUNDS = new BlockSoundGroup(1f, 1f, CONE_BREAK, CONE_STEP, CONE_PLACE, CONE_HIT, CONE_FALL);
 
     public static final RegistryEntry<SoundEvent> CONE_EQUIP = registerReference("block.cone.equip");
+    public static final SoundEvent CONE_LAND = register("block.cone.land");
+    public static final SoundEvent CONE_FALLS = register("block.cone.falls");
 }
