@@ -84,10 +84,22 @@ public class ConeBlock extends Block {
     @Override
     protected BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         if (direction == Direction.UP && state.get(STACKED) > 3)
-            return neighborState.isOf(this) ? state.with(STACKED, min(neighborState.get(STACKED) + 4, 6)) : state.with(STACKED, 3);
+            return neighborState.isOf(this) ? state.with(STACKED, min(neighborState.get(STACKED) + 4, 6)) : state;
         if (direction == Direction.DOWN && state.get(STACKED) < 3)
-            return neighborState.isOf(this) ? state.with(STACKED, max(neighborState.get(STACKED) - 4, 0)) : Blocks.AIR.getDefaultState();
+            return neighborState.isOf(this) && neighborState.get(STACKED) > 3 ? state.with(STACKED, max(neighborState.get(STACKED) - 4, 0)) : Blocks.AIR.getDefaultState();
         return state;
+    }
+
+    @Override
+    protected void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        super.onStateReplaced(state, world, pos, newState, moved);
+        if (newState.isOf(this)) return;
+        var down = world.getBlockState(pos.down());
+        if (down.isOf(this) && down.get(STACKED) >= 3)
+            if (state.get(STACKED) < 3)
+                world.breakBlock(pos.down(), true);
+            else
+                world.setBlockState(pos, state.with(STACKED, max(down.get(STACKED) - 4, 0)));
     }
 
     @Override
