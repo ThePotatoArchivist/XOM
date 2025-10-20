@@ -44,7 +44,7 @@ public class ConeSummoning {
         for (var checkOffset : REQUIRED_POSITIONS) {
             var checkPos = centerPos.add(checkOffset);
             var coneState = world.getBlockState(checkPos);
-            if (!coneState.isOf(Xom.CONE) || coneState.get(ConeBlock.STACKED) != 3) return false;
+            if (!coneState.isOf(Xom.CONE_BLOCK) || coneState.get(ConeBlock.STACKED) != 3) return false;
             var candleState = world.getBlockState(checkPos.up());
             if (!candleState.isOf(Blocks.ORANGE_CANDLE) || !candleState.get(CandleBlock.LIT)) return false;
         }
@@ -59,7 +59,7 @@ public class ConeSummoning {
     }
 
     public static void runSummon(World world, BlockPos centerPos) {
-        world.setBlockState(centerPos, Xom.CONE.getDefaultState());
+        world.setBlockState(centerPos, Xom.CONE_BLOCK.getDefaultState());
         var lightningEntity = EntityType.LIGHTNING_BOLT.create(world);
         if (lightningEntity == null)
             return;
