@@ -4,6 +4,12 @@ import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.component.type.AttributeModifierSlot;
+import net.minecraft.component.type.AttributeModifiersComponent;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributeModifier.Operation;
+import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.item.ArmorItem.Type;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -40,7 +46,13 @@ public class Xom implements ModInitializer {
 	public static final Item CONE_ITEM = Registry.register(
             Registries.ITEM,
             id("cone"),
-            new ConeItem(CONE, new Item.Settings())
+            new ConeItem(CONE, new Item.Settings()
+                    .attributeModifiers(AttributeModifiersComponent.builder()
+                            .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(Item.BASE_ATTACK_DAMAGE_MODIFIER_ID, 1, Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+                            .add(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(Item.BASE_ATTACK_SPEED_MODIFIER_ID, -2.4, Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+                            .add(EntityAttributes.GENERIC_ARMOR, new EntityAttributeModifier(Identifier.ofVanilla("armor." + Type.HELMET.getName()), 1, Operation.ADD_VALUE), AttributeModifierSlot.HEAD)
+                            .build())
+            )
     );
 
 	@Override
