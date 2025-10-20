@@ -3,6 +3,7 @@ package archives.tater.xom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
@@ -10,16 +11,36 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
+
+import static archives.tater.xom.XomUtil.associateWith;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class ConeBlock extends Block {
 
     public static final IntProperty STACKED = IntProperty.of("stacked", 0, 6);
+
+    private static VoxelShape getShape(int stack, boolean fenceHeight) {
+        if (stack < 3)
+            return createCuboidShape(4, 0, 4, 12, (fenceHeight ? 12 : 4) + 4 * stack, 12);
+        var height = 2 + 4 * (stack - 3);
+        return VoxelShapes.union(
+                createCuboidShape(0, 0, 0, 16, height, 16),
+                createCuboidShape(4, height, 4, 12, (fenceHeight && stack == 3) ? 24 : 16, 12)
+        );
+    }
+
+    private static final Map<Integer, VoxelShape> OUTLINE_SHAPES = STACKED.getValues().stream().collect(associateWith(stack -> getShape(stack, false)));
+    private static final Map<Integer, VoxelShape> COLLISION_SHAPES = STACKED.getValues().stream().collect(associateWith(stack -> getShape(stack, true)));
 
     public ConeBlock(Settings settings) {
         super(settings);
@@ -67,5 +88,15 @@ public class ConeBlock extends Block {
         if (direction == Direction.DOWN && state.get(STACKED) < 3)
             return neighborState.isOf(this) ? state.with(STACKED, max(neighborState.get(STACKED) - 4, 0)) : Blocks.AIR.getDefaultState();
         return state;
+    }
+
+    @Override
+    protected VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return OUTLINE_SHAPES.get(state.get(STACKED));
+    }
+
+    @Override
+    protected VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return COLLISION_SHAPES.get(state.get(STACKED));
     }
 }

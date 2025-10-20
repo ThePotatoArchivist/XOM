@@ -1,13 +1,14 @@
 package archives.tater.xom;
 
 import net.fabricmc.api.ModInitializer;
+
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +27,7 @@ public class Xom implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-	public static final Block CONE = Registry.register(
+    public static final Block CONE = Registry.register(
 			Registries.BLOCK,
 			id("cone"),
 			new ConeBlock(AbstractBlock.Settings.create()
@@ -36,7 +37,11 @@ public class Xom implements ModInitializer {
 			)
 	);
 
-	public static final Item CONE_ITEM = Items.register(CONE);
+	public static final Item CONE_ITEM = Registry.register(
+            Registries.ITEM,
+            id("cone"),
+            new ConeItem(CONE, new Item.Settings())
+    );
 
 	@Override
 	public void onInitialize() {

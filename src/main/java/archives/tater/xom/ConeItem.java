@@ -6,6 +6,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Equipment;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
@@ -17,11 +19,16 @@ public class ConeItem extends BlockItem implements Equipment {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        return super.use(world, user, hand);
+        return equipAndSwap(this, world, user, hand);
     }
 
     @Override
     public EquipmentSlot getSlotType() {
-        return null;
+        return EquipmentSlot.HEAD;
+    }
+
+    @Override
+    public RegistryEntry<SoundEvent> getEquipSound() {
+        return XomSounds.CONE_EQUIP;
     }
 }
