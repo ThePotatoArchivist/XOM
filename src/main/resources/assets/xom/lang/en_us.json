@@ -1,3 +1,5 @@
 {
-  "block.xom.cone": "Cone"
+  "block.xom.cone": "Cone",
+  "death.attack.xom.cone": "%s was conespicuously killed by %s",
+  "death.attack.xom.cone.item": "%s was conespicuously killed by %s using %s"
 }
