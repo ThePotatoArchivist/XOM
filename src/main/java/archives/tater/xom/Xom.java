@@ -4,6 +4,8 @@ import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.FluidBlock;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.EntityType;
@@ -11,8 +13,11 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributeModifier.Operation;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.item.ArmorItem.Type;
+import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
@@ -47,6 +52,15 @@ public class Xom implements ModInitializer {
 			)
 	);
 
+    public static final FlowableFluid LIQUID_POLYCARB = Registry.register(Registries.FLUID, id("liquid_polycarb"), new PolycarbFluid.Still());
+    public static final FlowableFluid FLOWING_LIQUID_POLYCARB = Registry.register(Registries.FLUID, id("flowing_liquid_polycarb"), new PolycarbFluid.Flowing());
+
+    public static final Block LIQUID_POLYCARB_BLOCK = Registry.register(
+            Registries.BLOCK,
+            id("liquid_polycarb"),
+            new FluidBlock(LIQUID_POLYCARB, AbstractBlock.Settings.copy(Blocks.WATER))
+    );
+
 	public static final Item CONE_ITEM = Registry.register(
             Registries.ITEM,
             id("cone"),
@@ -68,7 +82,7 @@ public class Xom implements ModInitializer {
     public static final Item POLYCARB_BUCKET = Registry.register(
             Registries.ITEM,
             id("polycarb_bucket"),
-            new Item(new Item.Settings())
+            new BucketItem(LIQUID_POLYCARB, new Item.Settings().maxCount(1).recipeRemainder(Items.BUCKET))
     );
 
     public static final EntityType<ConeEntity> CONE_ENTITY = Registry.register(
