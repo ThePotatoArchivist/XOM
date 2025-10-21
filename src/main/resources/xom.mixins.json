@@ -3,10 +3,12 @@
   "package": "archives.tater.xom.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "AbstractFurnaceBlockEntityMixin",
     "DamageSourceMixin",
     "FallingBlockEntityAccessor",
     "FallingBlockEntityMixin",
-    "FlintAndSteelMixin"
+    "FlintAndSteelMixin",
+    "PointedDripstoneBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -59,6 +59,18 @@ public class Xom implements ModInitializer {
             )
     );
 
+    public static final Item POLYCARB_SHEET = Registry.register(
+            Registries.ITEM,
+            id("polycarb_sheet"),
+            new Item(new Item.Settings())
+    );
+
+    public static final Item POLYCARB_BUCKET = Registry.register(
+            Registries.ITEM,
+            id("polycarb_bucket"),
+            new Item(new Item.Settings())
+    );
+
     public static final EntityType<ConeEntity> CONE_ENTITY = Registry.register(
             Registries.ENTITY_TYPE,
             id("cone"),
