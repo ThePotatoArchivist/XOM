@@ -8,7 +8,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.FallingBlockEntityRenderer;
-import net.minecraft.util.Identifier;
 
 public class XomClient implements ClientModInitializer {
 	@Override
@@ -18,9 +17,9 @@ public class XomClient implements ClientModInitializer {
         EntityRendererRegistry.register(Xom.CONE_ENTITY, FallingBlockEntityRenderer::new);
 
         FluidRenderHandlerRegistry.INSTANCE.register(Xom.LIQUID_POLYCARB, Xom.FLOWING_LIQUID_POLYCARB, new SimpleFluidRenderHandler(
-                Identifier.ofVanilla("block/water_still"),
-                Identifier.ofVanilla("block/water_flow"),
-                0x4CC248
+                SimpleFluidRenderHandler.LAVA_STILL,
+                SimpleFluidRenderHandler.LAVA_FLOWING,
+                0xc0d5db
         ));
 
         BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), Xom.LIQUID_POLYCARB, Xom.FLOWING_LIQUID_POLYCARB);

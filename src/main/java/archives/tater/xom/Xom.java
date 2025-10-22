@@ -81,7 +81,7 @@ public class Xom implements ModInitializer {
 
     public static final Item POLYCARB_BUCKET = Registry.register(
             Registries.ITEM,
-            id("polycarb_bucket"),
+            id("liquid_polycarb_bucket"),
             new BucketItem(LIQUID_POLYCARB, new Item.Settings().maxCount(1).recipeRemainder(Items.BUCKET))
     );
 

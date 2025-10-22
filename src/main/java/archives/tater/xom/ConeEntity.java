@@ -40,6 +40,8 @@ public class ConeEntity extends FallingBlockEntity {
 
         if (hit instanceof EntityHitResult entityHit) {
             ((LivingEntity) entityHit.getEntity()).equipStack(EquipmentSlot.HEAD, getBlockState().getBlock().asItem().getDefaultStack());
+            if (entityHit.getEntity() instanceof MobEntity mobEntity)
+                mobEntity.setEquipmentDropChance(EquipmentSlot.HEAD, 1);
             return true;
         }
 
