@@ -120,6 +120,15 @@ public class Xom implements ModInitializer {
                     .build()
     );
 
+	public static final EntityType<KevinEntity> KEVIN_ENTITY = Registry.register(
+			Registries.ENTITY_TYPE,
+			id("kevin"),
+			EntityType.Builder.create(KevinEntity::new, SpawnGroup.MISC)
+					.dimensions(KevinEntity.MIN_DIMENSION, KevinEntity.MIN_DIMENSION)
+					.trackingTickInterval(20)
+					.build()
+	);
+
     public static final TagKey<EntityType<?>> CAN_WEAR_CONE = TagKey.of(RegistryKeys.ENTITY_TYPE, id("can_wear_cone"));
 
 	@Override
