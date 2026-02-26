@@ -1,6 +1,10 @@
 package archives.tater.xom;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributeHandler;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes;
 
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -17,15 +21,25 @@ import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.item.ArmorItem.Type;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
+import java.util.Optional;
 
 public class Xom implements ModInitializer {
 	@SuppressWarnings("unused")
@@ -58,7 +72,7 @@ public class Xom implements ModInitializer {
     public static final Block LIQUID_POLYCARB_BLOCK = Registry.register(
             Registries.BLOCK,
             id("liquid_polycarb"),
-            new FluidBlock(LIQUID_POLYCARB, AbstractBlock.Settings.copy(Blocks.WATER))
+            new FluidBlock(LIQUID_POLYCARB, AbstractBlock.Settings.copy(Blocks.WATER).luminance(state -> 15))
     );
 
 	public static final Item CONE_ITEM = Registry.register(
@@ -78,6 +92,17 @@ public class Xom implements ModInitializer {
             id("polycarb_sheet"),
             new Item(new Item.Settings())
     );
+
+	public static final Item SMOKED_POLYCARB = Registry.register(
+			Registries.ITEM,
+			id("smoked_polycarb"),
+			new Item(new Item.Settings()) {
+				@Override
+				public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+					tooltip.add(Text.translatable("item.xom.smoked_polycarb.tooltip"));
+				}
+			}
+	);
 
     public static final Item POLYCARB_BUCKET = Registry.register(
             Registries.ITEM,
@@ -104,6 +129,28 @@ public class Xom implements ModInitializer {
 		// Proceed with mild caution.
 
 		ConeSummoning.registerCallbacks();
+
+		FluidVariantAttributes.register(LIQUID_POLYCARB, new FluidVariantAttributeHandler() {
+			@Override
+			public Optional<SoundEvent> getFillSound(FluidVariant variant) {
+				return Optional.of(SoundEvents.ITEM_BUCKET_FILL_LAVA);
+			}
+
+			@Override
+			public Optional<SoundEvent> getEmptySound(FluidVariant variant) {
+				return Optional.of(SoundEvents.ITEM_BUCKET_EMPTY_LAVA);
+			}
+
+			@Override
+			public int getTemperature(FluidVariant variant) {
+				return FluidConstants.LAVA_TEMPERATURE;
+			}
+
+			@Override
+			public int getViscosity(FluidVariant variant, @Nullable World world) {
+				return FluidConstants.LAVA_VISCOSITY;
+			}
+		});
 
 		LOGGER.info("NATE LIVES");
 	}

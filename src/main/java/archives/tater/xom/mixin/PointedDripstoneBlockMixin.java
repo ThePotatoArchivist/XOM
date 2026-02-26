@@ -16,7 +16,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.PointedDripstoneBlock;
 import net.minecraft.block.enums.Thickness;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -52,7 +51,7 @@ public abstract class PointedDripstoneBlockMixin {
     )
     private static BlockPos makeCone(World world, BlockPos pos, Fluid fluid, Operation<BlockPos> original, @Cancellable CallbackInfo ci) {
         var originalResult = original.call(world, pos, fluid);
-        if (!fluid.matchesType(Fluids.LAVA)) return originalResult;
+        if (!fluid.matchesType(Xom.LIQUID_POLYCARB)) return originalResult;
         var dripstonePos = searchInDirection(world,
                 pos,
                 Direction.DOWN.getDirection(),

@@ -1,5 +1,10 @@
 {
   "block.xom.cone": "Cone",
+  "block.xom.liquid_polycarb": "Liquid Polycarb",
+  "item.xom.polycarb_sheet": "Polycarb Sheet",
+  "item.xom.smoked_polycarb": "Smoked Polycarb",
+  "item.xom.smoked_polycarb.tooltip": "Useless",
+  "item.xom.liquid_polycarb_bucket": "Bucket of Liquid Polycarb",
   "death.attack.xom.cone": "%s was conespicuously killed by %s",
   "death.attack.xom.cone.item": "%s was conespicuously killed by %s using %s"
 }
