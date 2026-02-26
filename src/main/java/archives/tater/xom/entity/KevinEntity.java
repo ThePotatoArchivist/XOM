@@ -21,6 +21,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 import static java.lang.Math.min;
+import static java.lang.Math.round;
 import static java.util.Objects.requireNonNullElse;
 
 public class KevinEntity extends Entity {
@@ -34,7 +35,6 @@ public class KevinEntity extends Entity {
     public static final float SCALE_PER_SIZE = (MAX_DIMENSION / MIN_DIMENSION - 1) / IMPLODE_SIZE;
     public static final double MIN_VELOCITY = 0.01f;
     public static final double ASCEND_SPEED = 0.1;
-    public static final int MAX_HEALTH = 10;
     public static final int IMPLODE_TICKS = 10 * 20;
     private static final List<FireworkExplosionComponent> FIREWORK = List.of(new FireworkExplosionComponent(
             FireworkExplosionComponent.Type.SMALL_BALL,
@@ -44,7 +44,6 @@ public class KevinEntity extends Entity {
             false
     ));
 
-    private float health = MAX_HEALTH;
     private int implodeTicks = 0;
 
     public KevinEntity(EntityType<?> type, World world) {
@@ -94,8 +93,11 @@ public class KevinEntity extends Entity {
             implodeTicks++;
 
             if (!getWorld().isClient() && implodeTicks > IMPLODE_TICKS) {
-                dropItem(XomItems.POLYCARB_SHEET);
                 getWorld().sendEntityStatus(this, EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES);
+                var itemEntity = new ItemEntity(getWorld(), getX(), getY(), getZ(), XomItems.POLYCARB_SHEET.getDefaultStack(), 0, 0, 0);
+                itemEntity.setToDefaultPickupDelay();
+                itemEntity.setNoGravity(true);
+                getWorld().spawnEntity(itemEntity);
                 discard();
                 return;
             }
@@ -106,10 +108,6 @@ public class KevinEntity extends Entity {
             setVelocity(getVelocity().multiply(0.75, 0.97, 0.75));
 
         move(MovementType.SELF, getVelocity());
-
-        if (age % 100 == 0) {
-            health = min(health + 1, MAX_HEALTH);
-        }
     }
 
     @Override
@@ -145,10 +143,15 @@ public class KevinEntity extends Entity {
     public boolean damage(DamageSource source, float amount) {
         if (this.isInvulnerableTo(source)) return false;
         if (this.getWorld().isClient) return true;
+        var amountRounded = round(amount);
+        if (amountRounded <= 0) return false;
+        var removed = min(amountRounded, getSize());
         scheduleVelocityUpdate();
         emitGameEvent(GameEvent.ENTITY_DAMAGE);
-        health -= amount;
-        if (health <= 0) {
+        addSize(-amountRounded);
+        if (!source.isIn(DamageTypeTags.BURNS_ARMOR_STANDS))
+            dropStack(XomItems.DUCT_TAPE.getDefaultStack().copyWithCount(removed));
+        if (getSize() < 0) {
             dropItem(XomItems.KEVIN_CORE);
             this.discard();
         } else if (!source.isIn(DamageTypeTags.NO_KNOCKBACK))
@@ -197,13 +200,10 @@ public class KevinEntity extends Entity {
     @Override
     protected void readCustomDataFromNbt(NbtCompound nbt) {
         setSize(nbt.getInt("size"));
-        if (nbt.contains("health"))
-            health = nbt.getFloat("health");
     }
 
     @Override
     protected void writeCustomDataToNbt(NbtCompound nbt) {
         nbt.putInt("size", getSize());
-        nbt.putFloat("health", health);
     }
 }
