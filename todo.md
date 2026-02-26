@@ -3,7 +3,7 @@
 - [x] Polycarb Sheet in chest slot
   - [ ] Record Sound
 - [x] Kevin
-  - [ ] Kevin Core
+  - [x] Kevin Core
   - [ ] Duct Tape
     - [ ] Textures
     - [ ] Roll of Duct Tape

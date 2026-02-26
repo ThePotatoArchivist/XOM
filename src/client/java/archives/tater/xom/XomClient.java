@@ -18,6 +18,8 @@ public class XomClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		// This entrypoint is suitable for setting up client-specific logic, such as rendering.
 		BlockRenderLayerMap.INSTANCE.putBlock(Xom.CONE_BLOCK, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(Xom.DUCT_TAPE_BLOCK, RenderLayer.getCutout());
+
         EntityRendererRegistry.register(Xom.CONE_ENTITY, FallingBlockEntityRenderer::new);
         EntityRendererRegistry.register(Xom.KEVIN_ENTITY, KevinEntityRenderer::new);
 

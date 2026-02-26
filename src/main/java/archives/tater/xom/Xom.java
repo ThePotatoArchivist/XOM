@@ -18,16 +18,14 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributeModifier.Operation;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.fluid.FlowableFluid;
+import net.minecraft.item.*;
 import net.minecraft.item.ArmorItem.Type;
-import net.minecraft.item.BucketItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -66,6 +64,16 @@ public class Xom implements ModInitializer {
 			)
 	);
 
+	public static final Block DUCT_TAPE_BLOCK = Registry.register(
+			Registries.BLOCK,
+			id("duct_tape"),
+			new DuctTapeBlock(AbstractBlock.Settings.create()
+					.noCollision()
+					.strength(0.5f, 0f)
+					.sounds(BlockSoundGroup.WOOL)
+			)
+	);
+
     public static final FlowableFluid LIQUID_POLYCARB = Registry.register(Registries.FLUID, id("liquid_polycarb"), new PolycarbFluid.Still());
     public static final FlowableFluid FLOWING_LIQUID_POLYCARB = Registry.register(Registries.FLUID, id("flowing_liquid_polycarb"), new PolycarbFluid.Flowing());
 
@@ -86,6 +94,12 @@ public class Xom implements ModInitializer {
                             .build())
             )
     );
+
+	public static final Item DUCT_TAPE_ITEM = Registry.register(
+			Registries.ITEM,
+			id("duct_tape"),
+			new BlockItem(DUCT_TAPE_BLOCK, new Item.Settings())
+	);
 
     public static final Item POLYCARB_SHEET = Registry.register(
             Registries.ITEM,
