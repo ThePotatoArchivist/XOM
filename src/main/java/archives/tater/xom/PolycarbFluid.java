@@ -16,6 +16,9 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 
 public abstract class PolycarbFluid extends FlowableFluid {
+
+    public static final float DRIP_CHANCE = 0.1f;
+
     @Override
     public Item getBucketItem() {
         return Xom.POLYCARB_BUCKET;

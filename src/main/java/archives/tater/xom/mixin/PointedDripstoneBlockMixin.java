@@ -1,10 +1,17 @@
 package archives.tater.xom.mixin;
 
+import archives.tater.xom.PolycarbFluid;
 import archives.tater.xom.Xom;
 
+import com.llamalad7.mixinextras.expression.Definition;
+import com.llamalad7.mixinextras.expression.Expression;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Cancellable;
+import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.Share;
+import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -44,6 +51,30 @@ public abstract class PointedDripstoneBlockMixin {
     @Shadow
     @Final
     public static BooleanProperty WATERLOGGED;
+
+    @Definition(id = "fluid", local = @Local(type = Fluid.class))
+    @Definition(id = "WATER", field = "Lnet/minecraft/fluid/Fluids;WATER:Lnet/minecraft/fluid/FlowableFluid;")
+    @Expression("fluid == WATER")
+    @WrapOperation(
+            method = "dripTick",
+            at = @At("MIXINEXTRAS:EXPRESSION:FIRST")
+    )
+    private static boolean allowPolycarbFluid(Object left, Object right, Operation<Boolean> original, @Share("polycarb") LocalBooleanRef polycarb) {
+        if (original.call(left, right)) return true;
+        if (left != Xom.LIQUID_POLYCARB) return false;
+        polycarb.set(true);
+        return true;
+    }
+
+    @Definition(id = "f", local = @Local(type = float.class, ordinal = 1))
+    @Expression("f = @(?)")
+    @ModifyExpressionValue(
+            method = "dripTick",
+            at = @At("MIXINEXTRAS:EXPRESSION:FIRST")
+    )
+    private static float polycarbFluidChance(float original, @Share("polycarb") LocalBooleanRef polycarb) {
+        return polycarb.get() ? PolycarbFluid.DRIP_CHANCE : original;
+    }
 
     @WrapOperation(
             method = "dripTick",
