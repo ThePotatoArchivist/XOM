@@ -110,6 +110,12 @@ public class Xom implements ModInitializer {
             new BucketItem(LIQUID_POLYCARB, new Item.Settings().maxCount(1).recipeRemainder(Items.BUCKET))
     );
 
+	public static final Item KEVIN_CORE = Registry.register(
+			Registries.ITEM,
+			id("kevin_core"),
+			new KevinCoreItem(new Item.Settings().maxCount(1))
+	);
+
     public static final EntityType<ConeEntity> CONE_ENTITY = Registry.register(
             Registries.ENTITY_TYPE,
             id("cone"),

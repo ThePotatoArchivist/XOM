@@ -8,7 +8,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
 public class KevinEntityRenderer extends EntityRenderer<KevinEntity> {
-    public static final Identifier TEXTURE = Xom.id("textures/entity/kevin.png");
+    public static final Identifier TEXTURE = Xom.id("textures/item/kevin.png");
     private final KevinEntityModel<KevinEntity> model;
 
     protected KevinEntityRenderer(EntityRendererFactory.Context ctx) {
@@ -20,7 +20,8 @@ public class KevinEntityRenderer extends EntityRenderer<KevinEntity> {
     public void render(KevinEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         matrices.push();
         var scale = entity.getScale() / 2;
-        matrices.scale(scale, scale, scale);
+        matrices.scale(scale, -scale, scale);
+        matrices.translate(0, -1, 0);
         model.render(matrices, vertexConsumers.getBuffer(model.getLayer(TEXTURE)), light, OverlayTexture.DEFAULT_UV);
         matrices.pop();
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);

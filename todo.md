@@ -2,7 +2,7 @@
 - [x] Smoked Polycarb
 - [x] Polycarb Sheet in chest slot
   - [ ] Record Sound
-- [ ] Kevin
+- [x] Kevin
   - [ ] Kevin Core
   - [ ] Duct Tape
     - [ ] Textures

@@ -5,8 +5,12 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
+import net.minecraft.world.event.GameEvent;
+
+import org.jetbrains.annotations.Nullable;
 
 public class KevinEntity extends Entity {
 
@@ -64,13 +68,19 @@ public class KevinEntity extends Entity {
     }
 
     @Override
+    public @Nullable ItemStack getPickBlockStack() {
+        return Xom.KEVIN_CORE.getDefaultStack();
+    }
+
+    @Override
     public boolean damage(DamageSource source, float amount) {
         if (this.isInvulnerableTo(source)) return false;
         if (this.getWorld().isClient) return true;
         scheduleVelocityUpdate();
+        emitGameEvent(GameEvent.ENTITY_DAMAGE);
         health -= amount;
         if (health <= 0) {
-            // TODO drop item
+            dropItem(Xom.KEVIN_CORE);
             this.discard();
         } else
             addVelocity(getPos().subtract(source.getPosition())
