@@ -101,6 +101,14 @@ public class Xom implements ModInitializer {
 			new BlockItem(DUCT_TAPE_BLOCK, new Item.Settings())
 	);
 
+	public static final Item DUCT_TAPE_ROLL_ITEM = Registry.register(
+			Registries.ITEM,
+			id("duct_tape_roll"),
+			new DuctTapeRollItem(new Item.Settings()
+					.maxDamage(64)
+			)
+	);
+
     public static final Item POLYCARB_SHEET = Registry.register(
             Registries.ITEM,
             id("polycarb_sheet"),
@@ -145,7 +153,6 @@ public class Xom implements ModInitializer {
 			id("kevin"),
 			EntityType.Builder.create(KevinEntity::new, SpawnGroup.MISC)
 					.dimensions(KevinEntity.MIN_DIMENSION, KevinEntity.MIN_DIMENSION)
-					.trackingTickInterval(20)
 					.build()
 	);
 
