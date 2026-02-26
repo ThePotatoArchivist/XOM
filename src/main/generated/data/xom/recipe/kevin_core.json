@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "xom:duct_tape"
+    },
+    {
+      "item": "xom:duct_tape"
+    },
+    {
+      "item": "xom:duct_tape"
+    },
+    {
+      "item": "xom:duct_tape"
+    },
+    {
+      "item": "xom:duct_tape"
+    },
+    {
+      "item": "xom:duct_tape"
+    },
+    {
+      "item": "xom:duct_tape"
+    },
+    {
+      "item": "xom:duct_tape"
+    },
+    {
+      "item": "xom:duct_tape"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "xom:kevin_core"
+  }
+}

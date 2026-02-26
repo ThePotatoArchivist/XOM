@@ -11,13 +11,9 @@ import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-
-import java.util.List;
 
 public class XomItems {
 
@@ -41,12 +37,7 @@ public class XomItems {
 
     public static final Item POLYCARB_SHEET = register("polycarb_sheet", new PolycarbSheetItem(new Item.Settings()));
 
-    public static final Item SMOKED_POLYCARB = register("smoked_polycarb", new PolycarbSheetItem(new Item.Settings()) {
-        @Override
-        public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-            tooltip.add(Text.translatable("item.xom.smoked_polycarb.tooltip"));
-        }
-    });
+    public static final Item SMOKED_POLYCARB = register("smoked_polycarb", new PolycarbSheetItem.Smoked(new Item.Settings()));
 
     public static final Item POLYCARB_BUCKET = register("liquid_polycarb_bucket", new BucketItem(XomFluids.LIQUID_POLYCARB, new Item.Settings()
             .maxCount(1)

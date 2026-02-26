@@ -20,6 +20,9 @@
 		],
 		"client": [
 			"archives.tater.xom.XomClient"
+		],
+		"fabric-datagen": [
+			"archives.tater.xom.XomDataGenerator"
 		]
 	},
 	"mixins": [

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 20,
+  "experience": 0.0,
+  "ingredient": {
+    "item": "xom:polycarb_sheet"
+  },
+  "result": {
+    "id": "xom:smoked_polycarb"
+  }
+}

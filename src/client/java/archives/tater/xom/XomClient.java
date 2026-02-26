@@ -1,5 +1,7 @@
 package archives.tater.xom;
 
+import archives.tater.xom.client.model.entity.KevinEntityModel;
+import archives.tater.xom.client.render.entity.KevinEntityRenderer;
 import archives.tater.xom.registry.XomBlocks;
 import archives.tater.xom.registry.XomEntities;
 import archives.tater.xom.registry.XomFluids;

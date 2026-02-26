@@ -1,0 +1,15 @@
+{
+  "block.xom.cone": "Cone",
+  "block.xom.duct_tape": "Duct Tape",
+  "block.xom.liquid_polycarb": "Liquid Polycarb",
+  "death.attack.xom.cone": "%s was conespicuously killed by %s",
+  "death.attack.xom.cone.item": "%s was conespicuously killed by %s using %s",
+  "entity.xom.cone": "Cone",
+  "entity.xom.kevin": "Kevin",
+  "item.xom.duct_tape_roll": "Roll of Duct Tape",
+  "item.xom.kevin_core": "Kevin Core",
+  "item.xom.liquid_polycarb_bucket": "Bucket of Liquid Polycarb",
+  "item.xom.polycarb_sheet": "Polycarb Sheet",
+  "item.xom.smoked_polycarb": "Smoked Polycarb",
+  "item.xom.smoked_polycarb.tooltip": "Useless"
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smoking",
+  "category": "food",
+  "cookingtime": 10,
+  "experience": 0.0,
+  "ingredient": {
+    "item": "xom:polycarb_sheet"
+  },
+  "result": {
+    "id": "xom:smoked_polycarb"
+  }
+}

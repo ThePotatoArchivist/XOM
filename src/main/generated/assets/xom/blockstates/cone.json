@@ -1,0 +1,25 @@
+{
+  "variants": {
+    "stacked=0": {
+      "model": "xom:block/cone_-3"
+    },
+    "stacked=1": {
+      "model": "xom:block/cone_-2"
+    },
+    "stacked=2": {
+      "model": "xom:block/cone_-1"
+    },
+    "stacked=3": {
+      "model": "xom:block/cone_0"
+    },
+    "stacked=4": {
+      "model": "xom:block/cone_1"
+    },
+    "stacked=5": {
+      "model": "xom:block/cone_2"
+    },
+    "stacked=6": {
+      "model": "xom:block/cone_3"
+    }
+  }
+}
