@@ -1,6 +1,6 @@
 package archives.tater.xom.datagen;
 
-import archives.tater.xom.item.PolycarbSheetItem;
+import archives.tater.xom.item.SmokedPolycarbSheetItem;
 import archives.tater.xom.registry.XomBlocks;
 import archives.tater.xom.registry.XomEntities;
 import archives.tater.xom.registry.XomItems;
@@ -24,7 +24,7 @@ public class LangGenerator extends FabricLanguageProvider {
         translationBuilder.add(XomBlocks.DUCT_TAPE, "Duct Tape");
         translationBuilder.add(XomItems.POLYCARB_SHEET, "Polycarb Sheet");
         translationBuilder.add(XomItems.SMOKED_POLYCARB, "Smoked Polycarb");
-        translationBuilder.add(PolycarbSheetItem.Smoked.TOOLTIP, "Useless");
+        translationBuilder.add(SmokedPolycarbSheetItem.TOOLTIP, "Useless");
         translationBuilder.add(XomItems.DUCT_TAPE_ROLL, "Roll of Duct Tape");
         translationBuilder.add(XomItems.POLYCARB_BUCKET, "Bucket of Liquid Polycarb");
         translationBuilder.add(XomItems.KEVIN_CORE, "Kevin Core");

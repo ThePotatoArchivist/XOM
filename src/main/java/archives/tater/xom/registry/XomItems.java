@@ -1,10 +1,7 @@
 package archives.tater.xom.registry;
 
 import archives.tater.xom.Xom;
-import archives.tater.xom.item.ConeItem;
-import archives.tater.xom.item.DuctTapeRollItem;
-import archives.tater.xom.item.KevinCoreItem;
-import archives.tater.xom.item.PolycarbSheetItem;
+import archives.tater.xom.item.*;
 
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
@@ -35,9 +32,13 @@ public class XomItems {
             .maxDamage(64)
     ));
 
-    public static final Item POLYCARB_SHEET = register("polycarb_sheet", new PolycarbSheetItem(new Item.Settings()));
+    public static final Item POLYCARB_SHEET = register("polycarb_sheet", new PolycarbSheetItem(new Item.Settings()
+            .attributeModifiers(AttributeModifiersComponent.builder()
+                    .add(EntityAttributes.GENERIC_ARMOR, new EntityAttributeModifier(Identifier.ofVanilla("armor." + ArmorItem.Type.HELMET.getName()), 4, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
+                    .build())
+    ));
 
-    public static final Item SMOKED_POLYCARB = register("smoked_polycarb", new PolycarbSheetItem.Smoked(new Item.Settings()));
+    public static final Item SMOKED_POLYCARB = register("smoked_polycarb", new SmokedPolycarbSheetItem(new Item.Settings()));
 
     public static final Item POLYCARB_BUCKET = register("liquid_polycarb_bucket", new BucketItem(XomFluids.LIQUID_POLYCARB, new Item.Settings()
             .maxCount(1)

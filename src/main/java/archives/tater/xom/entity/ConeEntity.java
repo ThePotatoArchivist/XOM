@@ -74,7 +74,7 @@ public class ConeEntity extends FallingBlockEntity {
 
     @Override
     public void tick() {
-        if (onHit(ProjectileUtil.getCollision(this, ConeEntity::canEquip))) {
+        if (!getWorld().isClient() && onHit(ProjectileUtil.getCollision(this, ConeEntity::canEquip))) {
             discard();
             return;
         }

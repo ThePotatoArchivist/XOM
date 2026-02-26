@@ -1,6 +1,6 @@
 package archives.tater.xom.mixin;
 
-import archives.tater.xom.item.PolycarbSheetItem;
+import archives.tater.xom.registry.XomItems;
 import archives.tater.xom.registry.XomSounds;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
@@ -31,6 +31,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     )
     private SoundEvent polycarbHurtSound(SoundEvent original) {
         // TODO record sound
-        return getEquippedStack(EquipmentSlot.CHEST).getItem() instanceof PolycarbSheetItem ? XomSounds.CONE_LAND : original;
+        return getEquippedStack(EquipmentSlot.CHEST).isOf(XomItems.POLYCARB_SHEET) ? XomSounds.CONE_LAND : original;
     }
 }
