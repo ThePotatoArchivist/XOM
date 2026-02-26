@@ -1,5 +1,6 @@
 - [ ] Liquid Polycarb Texture
-- [ ] Smoked Polycarb
+- [x] Smoked Polycarb
+- [ ] Polycarb Sheet in chest slot
 - [ ] Kevin
   - [ ] Kevin Core
   - [ ] Duct Tape

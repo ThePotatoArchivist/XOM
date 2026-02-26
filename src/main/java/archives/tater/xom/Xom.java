@@ -90,13 +90,13 @@ public class Xom implements ModInitializer {
     public static final Item POLYCARB_SHEET = Registry.register(
             Registries.ITEM,
             id("polycarb_sheet"),
-            new Item(new Item.Settings())
+            new PolycarbSheetItem(new Item.Settings())
     );
 
 	public static final Item SMOKED_POLYCARB = Registry.register(
 			Registries.ITEM,
 			id("smoked_polycarb"),
-			new Item(new Item.Settings()) {
+			new PolycarbSheetItem(new Item.Settings()) {
 				@Override
 				public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 					tooltip.add(Text.translatable("item.xom.smoked_polycarb.tooltip"));
