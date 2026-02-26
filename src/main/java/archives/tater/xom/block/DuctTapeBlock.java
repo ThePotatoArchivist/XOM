@@ -33,7 +33,11 @@ public class DuctTapeBlock extends Block {
 
     @Override
     protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        if (world.isClient() || !entity.getBoundingBox().intersects(state.getOutlineShape(world, pos).getBoundingBox().offset(pos)) || !(entity instanceof KevinEntity kevin)) return;
+        if (world.isClient()
+                || !entity.getBoundingBox().intersects(state.getOutlineShape(world, pos).getBoundingBox().offset(pos))
+                || !(entity instanceof KevinEntity kevin)
+                || entity.getMovement().horizontalLengthSquared() < KevinEntity.MIN_VELOCITY * KevinEntity.MIN_VELOCITY) return;
+
         kevin.addSize(1);
         world.breakBlock(pos, false, kevin);
     }

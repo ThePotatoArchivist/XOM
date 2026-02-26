@@ -24,7 +24,8 @@ public class KevinEntity extends Entity {
     public static final int IMPLODE_SIZE = 64 - 9;
     public static final float MIN_DIMENSION = 0.5f;
     public static final float MAX_DIMENSION = 2.0f;
-    public static final float SCALE_PER_SIZE = MAX_DIMENSION / MIN_DIMENSION / IMPLODE_SIZE;
+    public static final float SCALE_PER_SIZE = (MAX_DIMENSION / MIN_DIMENSION - 1) / IMPLODE_SIZE;
+    public static final double MIN_VELOCITY = 0.01f;
 
     private float health = 10;
 
