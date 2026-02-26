@@ -1,4 +1,6 @@
-package archives.tater.xom;
+package archives.tater.xom.item;
+
+import archives.tater.xom.registry.XomItems;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
@@ -13,10 +15,10 @@ public class DuctTapeRollItem extends Item {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        var result = Xom.DUCT_TAPE_ITEM.getDefaultStack().useOnBlock(new ItemUsageContext(context.getWorld(),
+        var result = XomItems.DUCT_TAPE.getDefaultStack().useOnBlock(new ItemUsageContext(context.getWorld(),
                 context.getPlayer(),
                 context.getHand(),
-                Xom.DUCT_TAPE_ITEM.getDefaultStack(),
+                XomItems.DUCT_TAPE.getDefaultStack(),
                 new BlockHitResult(context.getHitPos(), context.getSide(), context.getBlockPos(), context.hitsInsideBlock()))
         );
         if (result.isAccepted() && context.getPlayer() != null)

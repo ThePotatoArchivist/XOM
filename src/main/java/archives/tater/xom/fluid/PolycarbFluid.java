@@ -1,4 +1,8 @@
-package archives.tater.xom;
+package archives.tater.xom.fluid;
+
+import archives.tater.xom.registry.XomBlocks;
+import archives.tater.xom.registry.XomFluids;
+import archives.tater.xom.registry.XomItems;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -21,7 +25,7 @@ public abstract class PolycarbFluid extends FlowableFluid {
 
     @Override
     public Item getBucketItem() {
-        return Xom.POLYCARB_BUCKET;
+        return XomItems.POLYCARB_BUCKET;
     }
 
     @Override
@@ -41,17 +45,17 @@ public abstract class PolycarbFluid extends FlowableFluid {
 
     @Override
     protected BlockState toBlockState(FluidState state) {
-        return Xom.LIQUID_POLYCARB_BLOCK.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
+        return XomBlocks.LIQUID_POLYCARB.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
     }
 
     @Override
     public Fluid getFlowing() {
-        return Xom.FLOWING_LIQUID_POLYCARB;
+        return XomFluids.FLOWING_LIQUID_POLYCARB;
     }
 
     @Override
     public Fluid getStill() {
-        return Xom.LIQUID_POLYCARB;
+        return XomFluids.LIQUID_POLYCARB;
     }
 
     @Override

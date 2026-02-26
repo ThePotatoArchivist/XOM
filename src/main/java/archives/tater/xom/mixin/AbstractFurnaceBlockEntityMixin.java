@@ -1,6 +1,6 @@
 package archives.tater.xom.mixin;
 
-import archives.tater.xom.Xom;
+import archives.tater.xom.registry.XomItems;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -26,7 +26,7 @@ public class AbstractFurnaceBlockEntityMixin {
             cancellable = true
     )
     private static void allowPolycarbRecipe(DynamicRegistryManager registryManager, @Nullable RecipeEntry<?> recipe, DefaultedList<ItemStack> slots, int count, CallbackInfoReturnable<Boolean> cir) {
-        if (slots.getFirst().isOf(Xom.POLYCARB_SHEET) && slots.get(1).isOf(Items.BUCKET))
+        if (slots.getFirst().isOf(XomItems.POLYCARB_SHEET) && slots.get(1).isOf(Items.BUCKET))
             cir.setReturnValue(true);
     }
 
@@ -35,8 +35,8 @@ public class AbstractFurnaceBlockEntityMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;decrement(I)V")
     )
     private static void performPolycarbRecipe(DynamicRegistryManager registryManager, @Nullable RecipeEntry<?> recipe, DefaultedList<ItemStack> slots, int count, CallbackInfoReturnable<Boolean> cir) {
-        if (slots.getFirst().isOf(Xom.POLYCARB_SHEET) && slots.get(1).isOf(Items.BUCKET))
-            slots.set(1, Xom.POLYCARB_BUCKET.getDefaultStack());
+        if (slots.getFirst().isOf(XomItems.POLYCARB_SHEET) && slots.get(1).isOf(Items.BUCKET))
+            slots.set(1, XomItems.POLYCARB_BUCKET.getDefaultStack());
     }
 
     @WrapWithCondition(
@@ -44,7 +44,7 @@ public class AbstractFurnaceBlockEntityMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/util/collection/DefaultedList;set(ILjava/lang/Object;)Ljava/lang/Object;", ordinal = 0)
     )
     private static boolean preventOutput(DefaultedList<ItemStack> slots, int index, Object element) {
-        return !slots.getFirst().isOf(Xom.POLYCARB_SHEET) || !slots.get(1).isOf(Items.BUCKET);
+        return !slots.getFirst().isOf(XomItems.POLYCARB_SHEET) || !slots.get(1).isOf(Items.BUCKET);
     }
 
     @WrapWithCondition(
@@ -52,6 +52,6 @@ public class AbstractFurnaceBlockEntityMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;increment(I)V")
     )
     private static boolean preventOutput(ItemStack instance, int amount, @Local(argsOnly = true) DefaultedList<ItemStack> slots) {
-        return !slots.getFirst().isOf(Xom.POLYCARB_SHEET) || !slots.get(1).isOf(Items.BUCKET);
+        return !slots.getFirst().isOf(XomItems.POLYCARB_SHEET) || !slots.get(1).isOf(Items.BUCKET);
     }
 }

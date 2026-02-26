@@ -1,7 +1,7 @@
 package archives.tater.xom.mixin;
 
-import archives.tater.xom.ConeEntity;
-import archives.tater.xom.Xom;
+import archives.tater.xom.entity.ConeEntity;
+import archives.tater.xom.registry.XomBlocks;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,6 +17,6 @@ public class FallingBlockEntityMixin {
             at = @At(value = "FIELD", target = "Lnet/minecraft/block/Blocks;SAND:Lnet/minecraft/block/Block;")
     )
     private Block defaultCone(Block original) {
-        return ((Object) this instanceof ConeEntity) ? Xom.CONE_BLOCK : original;
+        return ((Object) this instanceof ConeEntity) ? XomBlocks.CONE : original;
     }
 }

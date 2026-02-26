@@ -1,4 +1,6 @@
-package archives.tater.xom;
+package archives.tater.xom.registry;
+
+import archives.tater.xom.Xom;
 
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -11,6 +13,7 @@ public class XomSounds {
     private static SoundEvent register(Identifier id) {
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
     }
+
     private static SoundEvent register(String path) {
         return register(Xom.id(path));
     }
@@ -32,4 +35,8 @@ public class XomSounds {
     public static final RegistryEntry<SoundEvent> CONE_EQUIP = registerReference("block.cone.equip");
     public static final SoundEvent CONE_LAND = register("block.cone.land");
     public static final SoundEvent CONE_FALLS = register("block.cone.falls");
+
+    public static void init() {
+
+    }
 }

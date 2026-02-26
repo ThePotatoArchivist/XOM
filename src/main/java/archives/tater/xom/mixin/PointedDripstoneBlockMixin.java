@@ -1,7 +1,8 @@
 package archives.tater.xom.mixin;
 
-import archives.tater.xom.PolycarbFluid;
-import archives.tater.xom.Xom;
+import archives.tater.xom.fluid.PolycarbFluid;
+import archives.tater.xom.registry.XomBlocks;
+import archives.tater.xom.registry.XomFluids;
 
 import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
@@ -61,7 +62,7 @@ public abstract class PointedDripstoneBlockMixin {
     )
     private static boolean allowPolycarbFluid(Object left, Object right, Operation<Boolean> original, @Share("polycarb") LocalBooleanRef polycarb) {
         if (original.call(left, right)) return true;
-        if (left != Xom.LIQUID_POLYCARB) return false;
+        if (left != XomFluids.LIQUID_POLYCARB) return false;
         polycarb.set(true);
         return true;
     }
@@ -82,7 +83,7 @@ public abstract class PointedDripstoneBlockMixin {
     )
     private static BlockPos makeCone(World world, BlockPos pos, Fluid fluid, Operation<BlockPos> original, @Cancellable CallbackInfo ci) {
         var originalResult = original.call(world, pos, fluid);
-        if (!fluid.matchesType(Xom.LIQUID_POLYCARB)) return originalResult;
+        if (!fluid.matchesType(XomFluids.LIQUID_POLYCARB)) return originalResult;
         var dripstonePos = searchInDirection(world,
                 pos,
                 Direction.DOWN.getDirection(),
@@ -95,7 +96,7 @@ public abstract class PointedDripstoneBlockMixin {
         ).orElse(null);
         if (dripstonePos == null || world.getBlockState(dripstonePos.down()).isOf(Blocks.POINTED_DRIPSTONE)) return originalResult;
         world.syncWorldEvent(WorldEvents.POINTED_DRIPSTONE_DRIPS, pos, 0);
-        world.setBlockState(dripstonePos, Xom.CONE_BLOCK.getDefaultState());
+        world.setBlockState(dripstonePos, XomBlocks.CONE.getDefaultState());
         ci.cancel();
         return originalResult;
     }

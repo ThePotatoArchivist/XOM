@@ -1,4 +1,6 @@
-package archives.tater.xom;
+package archives.tater.xom.entity;
+
+import archives.tater.xom.registry.XomItems;
 
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
@@ -77,7 +79,7 @@ public class KevinEntity extends Entity {
 
     @Override
     public @Nullable ItemStack getPickBlockStack() {
-        return Xom.KEVIN_CORE.getDefaultStack();
+        return XomItems.KEVIN_CORE.getDefaultStack();
     }
 
     @Override
@@ -88,7 +90,7 @@ public class KevinEntity extends Entity {
         emitGameEvent(GameEvent.ENTITY_DAMAGE);
         health -= amount;
         if (health <= 0) {
-            dropItem(Xom.KEVIN_CORE);
+            dropItem(XomItems.KEVIN_CORE);
             this.discard();
         } else if (!source.isIn(DamageTypeTags.NO_KNOCKBACK))
             addVelocity(getPos().subtract(requireNonNullElse(source.getPosition(), getPos()))

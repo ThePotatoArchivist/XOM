@@ -1,43 +1,13 @@
 package archives.tater.xom;
 
+import archives.tater.xom.registry.*;
+
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributeHandler;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FluidBlock;
-import net.minecraft.component.type.AttributeModifierSlot;
-import net.minecraft.component.type.AttributeModifiersComponent;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnGroup;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributeModifier.Operation;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.fluid.FlowableFluid;
-import net.minecraft.item.*;
-import net.minecraft.item.ArmorItem.Type;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
 
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
-import java.util.Optional;
 
 public class Xom implements ModInitializer {
 	@SuppressWarnings("unused")
@@ -54,139 +24,19 @@ public class Xom implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-    public static final Block CONE_BLOCK = Registry.register(
-			Registries.BLOCK,
-			id("cone"),
-			new ConeBlock(AbstractBlock.Settings.create()
-					.nonOpaque()
-					.strength(0.8f, 1.8f)
-					.sounds(XomSounds.CONE_SOUNDS)
-			)
-	);
-
-	public static final Block DUCT_TAPE_BLOCK = Registry.register(
-			Registries.BLOCK,
-			id("duct_tape"),
-			new DuctTapeBlock(AbstractBlock.Settings.create()
-					.noCollision()
-					.strength(0.5f, 0f)
-					.sounds(BlockSoundGroup.WOOL)
-			)
-	);
-
-    public static final FlowableFluid LIQUID_POLYCARB = Registry.register(Registries.FLUID, id("liquid_polycarb"), new PolycarbFluid.Still());
-    public static final FlowableFluid FLOWING_LIQUID_POLYCARB = Registry.register(Registries.FLUID, id("flowing_liquid_polycarb"), new PolycarbFluid.Flowing());
-
-    public static final Block LIQUID_POLYCARB_BLOCK = Registry.register(
-            Registries.BLOCK,
-            id("liquid_polycarb"),
-            new FluidBlock(LIQUID_POLYCARB, AbstractBlock.Settings.copy(Blocks.WATER).luminance(state -> 15))
-    );
-
-	public static final Item CONE_ITEM = Registry.register(
-            Registries.ITEM,
-            id("cone"),
-            new ConeItem(CONE_BLOCK, new Item.Settings()
-                    .attributeModifiers(AttributeModifiersComponent.builder()
-                            .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(Item.BASE_ATTACK_DAMAGE_MODIFIER_ID, 1, Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
-                            .add(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(Item.BASE_ATTACK_SPEED_MODIFIER_ID, -2.4, Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
-                            .add(EntityAttributes.GENERIC_ARMOR, new EntityAttributeModifier(Identifier.ofVanilla("armor." + Type.HELMET.getName()), 1, Operation.ADD_VALUE), AttributeModifierSlot.HEAD)
-                            .build())
-            )
-    );
-
-	public static final Item DUCT_TAPE_ITEM = Registry.register(
-			Registries.ITEM,
-			id("duct_tape"),
-			new BlockItem(DUCT_TAPE_BLOCK, new Item.Settings())
-	);
-
-	public static final Item DUCT_TAPE_ROLL_ITEM = Registry.register(
-			Registries.ITEM,
-			id("duct_tape_roll"),
-			new DuctTapeRollItem(new Item.Settings()
-					.maxDamage(64)
-			)
-	);
-
-    public static final Item POLYCARB_SHEET = Registry.register(
-            Registries.ITEM,
-            id("polycarb_sheet"),
-            new PolycarbSheetItem(new Item.Settings())
-    );
-
-	public static final Item SMOKED_POLYCARB = Registry.register(
-			Registries.ITEM,
-			id("smoked_polycarb"),
-			new PolycarbSheetItem(new Item.Settings()) {
-				@Override
-				public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-					tooltip.add(Text.translatable("item.xom.smoked_polycarb.tooltip"));
-				}
-			}
-	);
-
-    public static final Item POLYCARB_BUCKET = Registry.register(
-            Registries.ITEM,
-            id("liquid_polycarb_bucket"),
-            new BucketItem(LIQUID_POLYCARB, new Item.Settings().maxCount(1).recipeRemainder(Items.BUCKET))
-    );
-
-	public static final Item KEVIN_CORE = Registry.register(
-			Registries.ITEM,
-			id("kevin_core"),
-			new KevinCoreItem(new Item.Settings().maxCount(1))
-	);
-
-    public static final EntityType<ConeEntity> CONE_ENTITY = Registry.register(
-            Registries.ENTITY_TYPE,
-            id("cone"),
-            EntityType.Builder.<ConeEntity>create(ConeEntity::new, SpawnGroup.MISC)
-                    .dimensions(0.98f, 0.98f)
-                    .maxTrackingRange(10)
-                    .trackingTickInterval(20)
-                    .build()
-    );
-
-	public static final EntityType<KevinEntity> KEVIN_ENTITY = Registry.register(
-			Registries.ENTITY_TYPE,
-			id("kevin"),
-			EntityType.Builder.create(KevinEntity::new, SpawnGroup.MISC)
-					.dimensions(KevinEntity.MIN_DIMENSION, KevinEntity.MIN_DIMENSION)
-					.build()
-	);
-
-    public static final TagKey<EntityType<?>> CAN_WEAR_CONE = TagKey.of(RegistryKeys.ENTITY_TYPE, id("can_wear_cone"));
-
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
+		XomSounds.init();
+		XomBlocks.init();
+		XomFluids.init();
+		XomItems.init();
+		XomEntities.init();
+
 		ConeSummoning.registerCallbacks();
-
-		FluidVariantAttributes.register(LIQUID_POLYCARB, new FluidVariantAttributeHandler() {
-			@Override
-			public Optional<SoundEvent> getFillSound(FluidVariant variant) {
-				return Optional.of(SoundEvents.ITEM_BUCKET_FILL_LAVA);
-			}
-
-			@Override
-			public Optional<SoundEvent> getEmptySound(FluidVariant variant) {
-				return Optional.of(SoundEvents.ITEM_BUCKET_EMPTY_LAVA);
-			}
-
-			@Override
-			public int getTemperature(FluidVariant variant) {
-				return FluidConstants.LAVA_TEMPERATURE;
-			}
-
-			@Override
-			public int getViscosity(FluidVariant variant, @Nullable World world) {
-				return FluidConstants.LAVA_VISCOSITY;
-			}
-		});
 
 		LOGGER.info("NATE LIVES");
 	}

@@ -1,6 +1,10 @@
-package archives.tater.xom;
+package archives.tater.xom.entity;
 
+import archives.tater.xom.registry.XomSounds;
+import archives.tater.xom.block.ConeBlock;
 import archives.tater.xom.mixin.FallingBlockEntityAccessor;
+import archives.tater.xom.registry.XomBlocks;
+import archives.tater.xom.registry.XomEntities;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
@@ -16,11 +20,11 @@ import net.minecraft.world.World;
 public class ConeEntity extends FallingBlockEntity {
     public ConeEntity(EntityType<? extends ConeEntity> entityType, World world) {
         super(entityType, world);
-        ((FallingBlockEntityAccessor) this).setBlock(Xom.CONE_BLOCK.getDefaultState());
+        ((FallingBlockEntityAccessor) this).setBlock(XomBlocks.CONE.getDefaultState());
     }
 
     public ConeEntity(World world, double x, double y, double z, BlockState block) {
-        this(Xom.CONE_ENTITY, world);
+        this(XomEntities.CONE, world);
         ((FallingBlockEntityAccessor) this).setBlock(block);
         intersectionChecked = true;
         setPosition(x, y, z);
@@ -32,7 +36,7 @@ public class ConeEntity extends FallingBlockEntity {
 
     private static boolean canEquip(Entity entity) {
         if (!(entity instanceof LivingEntity livingEntity)) return false;
-        return (livingEntity.getType().isIn(Xom.CAN_WEAR_CONE) || (livingEntity instanceof MobEntity mob && mob.canPickUpLoot())) && livingEntity.getEquippedStack(EquipmentSlot.HEAD).isEmpty();
+        return (livingEntity.getType().isIn(XomEntities.CAN_WEAR_CONE) || (livingEntity instanceof MobEntity mob && mob.canPickUpLoot())) && livingEntity.getEquippedStack(EquipmentSlot.HEAD).isEmpty();
     }
 
     private boolean onHit(HitResult hit) {
@@ -51,17 +55,17 @@ public class ConeEntity extends FallingBlockEntity {
         if (getY() <= pos.getY()) return false;
 
         var hitState = getWorld().getBlockState(pos);
-        if (!hitState.isOf(Xom.CONE_BLOCK)) return false;
+        if (!hitState.isOf(XomBlocks.CONE)) return false;
 
         var stacked = hitState.get(ConeBlock.STACKED);
         if (stacked >= 6) return false;
 
         var offsetState = getWorld().getBlockState(pos.up());
-        if (!offsetState.isOf(Xom.CONE_BLOCK) && !offsetState.isReplaceable()) return false;
+        if (!offsetState.isOf(XomBlocks.CONE) && !offsetState.isReplaceable()) return false;
 
         getWorld().setBlockState(pos, hitState.with(ConeBlock.STACKED, stacked + 1));
-        if (stacked >= 3 && !offsetState.isOf(Xom.CONE_BLOCK))
-            getWorld().setBlockState(pos.up(), Xom.CONE_BLOCK.getDefaultState().with(ConeBlock.STACKED, 0));
+        if (stacked >= 3 && !offsetState.isOf(XomBlocks.CONE))
+            getWorld().setBlockState(pos.up(), XomBlocks.CONE.getDefaultState().with(ConeBlock.STACKED, 0));
 
         playSound(XomSounds.CONE_LAND, 1f, 1f);
 

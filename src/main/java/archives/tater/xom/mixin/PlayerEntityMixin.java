@@ -1,7 +1,7 @@
 package archives.tater.xom.mixin;
 
-import archives.tater.xom.PolycarbSheetItem;
-import archives.tater.xom.XomSounds;
+import archives.tater.xom.item.PolycarbSheetItem;
+import archives.tater.xom.registry.XomSounds;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import org.spongepowered.asm.mixin.Mixin;

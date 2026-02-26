@@ -1,5 +1,7 @@
 package archives.tater.xom;
 
+import archives.tater.xom.entity.KevinEntity;
+
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;

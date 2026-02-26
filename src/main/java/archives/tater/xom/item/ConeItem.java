@@ -1,4 +1,7 @@
-package archives.tater.xom;
+package archives.tater.xom.item;
+
+import archives.tater.xom.entity.ConeEntity;
+import archives.tater.xom.registry.XomSounds;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.EquipmentSlot;

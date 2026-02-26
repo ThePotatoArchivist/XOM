@@ -1,4 +1,7 @@
-package archives.tater.xom;
+package archives.tater.xom.item;
+
+import archives.tater.xom.entity.KevinEntity;
+import archives.tater.xom.registry.XomEntities;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -26,7 +29,7 @@ public class KevinCoreItem extends Item {
         var blockPos = itemPlacementContext.getBlockPos();
         var itemStack = context.getStack();
         var vec3d = Vec3d.ofBottomCenter(blockPos);
-        var box = Xom.KEVIN_ENTITY.getDimensions().getBoxAt(vec3d.getX(), vec3d.getY(), vec3d.getZ());
+        var box = XomEntities.KEVIN.getDimensions().getBoxAt(vec3d.getX(), vec3d.getY(), vec3d.getZ());
 
         if (!world.isSpaceEmpty(null, box) || !world.getOtherEntities(null, box).isEmpty())
             return ActionResult.FAIL;
@@ -34,7 +37,7 @@ public class KevinCoreItem extends Item {
         if (!(world instanceof ServerWorld serverWorld)) return ActionResult.SUCCESS;
 
         Consumer<KevinEntity> consumer = EntityType.copier(serverWorld, itemStack, context.getPlayer());
-        var kevinEntity = Xom.KEVIN_ENTITY.create(serverWorld, consumer, blockPos, SpawnReason.SPAWN_EGG, true, true);
+        var kevinEntity = XomEntities.KEVIN.create(serverWorld, consumer, blockPos, SpawnReason.SPAWN_EGG, true, true);
         if (kevinEntity == null) {
             return ActionResult.FAIL;
         }

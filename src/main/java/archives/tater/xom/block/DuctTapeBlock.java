@@ -1,4 +1,6 @@
-package archives.tater.xom;
+package archives.tater.xom.block;
+
+import archives.tater.xom.entity.KevinEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

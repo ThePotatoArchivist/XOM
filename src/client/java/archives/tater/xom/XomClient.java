@@ -1,5 +1,9 @@
 package archives.tater.xom;
 
+import archives.tater.xom.registry.XomBlocks;
+import archives.tater.xom.registry.XomEntities;
+import archives.tater.xom.registry.XomFluids;
+
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
@@ -17,21 +21,21 @@ public class XomClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		// This entrypoint is suitable for setting up client-specific logic, such as rendering.
-		BlockRenderLayerMap.INSTANCE.putBlock(Xom.CONE_BLOCK, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(Xom.DUCT_TAPE_BLOCK, RenderLayer.getCutout());
+		BlockRenderLayerMap.INSTANCE.putBlock(XomBlocks.CONE, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(XomBlocks.DUCT_TAPE, RenderLayer.getCutout());
 
-        EntityRendererRegistry.register(Xom.CONE_ENTITY, FallingBlockEntityRenderer::new);
-        EntityRendererRegistry.register(Xom.KEVIN_ENTITY, KevinEntityRenderer::new);
+        EntityRendererRegistry.register(XomEntities.CONE, FallingBlockEntityRenderer::new);
+        EntityRendererRegistry.register(XomEntities.KEVIN, KevinEntityRenderer::new);
 
         EntityModelLayerRegistry.registerModelLayer(KEVIN, KevinEntityModel::getTexturedModelData);
 
-        FluidRenderHandlerRegistry.INSTANCE.register(Xom.LIQUID_POLYCARB, Xom.FLOWING_LIQUID_POLYCARB, new SimpleFluidRenderHandler(
+        FluidRenderHandlerRegistry.INSTANCE.register(XomFluids.LIQUID_POLYCARB, XomFluids.FLOWING_LIQUID_POLYCARB, new SimpleFluidRenderHandler(
                 SimpleFluidRenderHandler.LAVA_STILL,
                 SimpleFluidRenderHandler.LAVA_FLOWING,
                 0xc0d5db
         ));
 
-        BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), Xom.LIQUID_POLYCARB, Xom.FLOWING_LIQUID_POLYCARB);
+        BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), XomFluids.LIQUID_POLYCARB, XomFluids.FLOWING_LIQUID_POLYCARB);
 
     }
 }

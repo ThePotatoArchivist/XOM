@@ -1,4 +1,4 @@
-package archives.tater.xom;
+package archives.tater.xom.block;
 
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;

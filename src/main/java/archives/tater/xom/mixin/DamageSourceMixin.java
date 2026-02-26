@@ -1,6 +1,6 @@
 package archives.tater.xom.mixin;
 
-import archives.tater.xom.Xom;
+import archives.tater.xom.registry.XomItems;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import org.spongepowered.asm.mixin.Final;
@@ -28,6 +28,6 @@ public abstract class DamageSourceMixin {
         if (attacker == null) return original;
         var weapon = attacker.getWeaponStack();
         if (weapon == null) return original;
-        return (weapon.isOf(Xom.CONE_ITEM)) ? "xom.cone" : original;
+        return (weapon.isOf(XomItems.CONE)) ? "xom.cone" : original;
     }
 }
