@@ -7,10 +7,13 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
 import org.jetbrains.annotations.Nullable;
+
+import static java.util.Objects.requireNonNullElse;
 
 public class KevinEntity extends Entity {
 
@@ -87,8 +90,8 @@ public class KevinEntity extends Entity {
         if (health <= 0) {
             dropItem(Xom.KEVIN_CORE);
             this.discard();
-        } else
-            addVelocity(getPos().subtract(source.getPosition())
+        } else if (!source.isIn(DamageTypeTags.NO_KNOCKBACK))
+            addVelocity(getPos().subtract(requireNonNullElse(source.getPosition(), getPos()))
                     .multiply(1, 0, 1)
                     .normalize()
                     .multiply(0.1)
