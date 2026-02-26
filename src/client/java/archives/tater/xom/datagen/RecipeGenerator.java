@@ -23,8 +23,8 @@ public class RecipeGenerator extends FabricRecipeProvider {
     }
 
     private void offerSmeltAndSmoke(RecipeExporter exporter, ItemConvertible input, RecipeCategory category, ItemConvertible output, float experience) {
-        offerSmelting(exporter, List.of(input), category, output, experience, 20, null);
-        offerFoodCookingRecipe(exporter, "smoker", RecipeSerializer.SMOKING, SmokingRecipe::new, 10, input, output, experience / 2);
+        offerSmelting(exporter, List.of(input), category, output, experience, 200, null);
+        offerFoodCookingRecipe(exporter, "smoker", RecipeSerializer.SMOKING, SmokingRecipe::new, 100, input, output, experience / 2);
     }
 
     @Override
