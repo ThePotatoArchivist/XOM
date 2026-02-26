@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "item": "minecraft:paper"
+    },
+    "@": {
+      "item": "minecraft:slime_ball"
+    }
+  },
+  "pattern": [
+    "###",
+    "#@#",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "xom:duct_tape_roll"
+  }
+}

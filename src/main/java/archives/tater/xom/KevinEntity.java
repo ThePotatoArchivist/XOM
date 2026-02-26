@@ -16,7 +16,7 @@ public class KevinEntity extends Entity {
 
     public static final TrackedData<Integer> SIZE = DataTracker.registerData(KevinEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
-    public static final int IMPLODE_SIZE = 64 - 8;
+    public static final int IMPLODE_SIZE = 64 - 9;
     public static final float MIN_DIMENSION = 0.5f;
     public static final float MAX_DIMENSION = 2.0f;
     public static final float SCALE_PER_SIZE = MAX_DIMENSION / MIN_DIMENSION / IMPLODE_SIZE;
@@ -60,6 +60,11 @@ public class KevinEntity extends Entity {
     @Override
     public boolean isPushable() {
         return true;
+    }
+
+    @Override
+    public float getStepHeight() {
+        return 0.5f;
     }
 
     @Override
