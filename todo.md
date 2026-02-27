@@ -7,8 +7,8 @@
   - [x] Duct Tape
     - [x] Textures
     - [x] Roll of Duct Tape
-- [ ] jij myarm
-- [ ] drips
+- [x] jij myarm
+- [x] drips
 
 --- 
 old
