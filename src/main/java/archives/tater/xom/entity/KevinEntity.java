@@ -17,6 +17,7 @@ import net.minecraft.world.event.GameEvent;
 
 import it.unimi.dsi.fastutil.ints.IntList;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
 import java.util.List;
 
@@ -45,6 +46,7 @@ public class KevinEntity extends Entity {
     ));
 
     private int implodeTicks = 0;
+    public final Vector3f rotationAxis = Vec3d.fromPolar((random.nextFloat() * 180) - 90, random.nextFloat() * 360).toVector3f();
 
     public KevinEntity(EntityType<?> type, World world) {
         super(type, world);
@@ -81,8 +83,12 @@ public class KevinEntity extends Entity {
         return 1 + SCALE_PER_SIZE * getSize();
     }
 
-    public float getVisualScale(float tickDelta) {
-        return isImploding() ? getScale() * (1 - ((implodeTicks + tickDelta) / IMPLODE_TICKS)) : getScale();
+    public float getImplodeTicks(float tickDelta) {
+        return implodeTicks + tickDelta;
+    }
+
+    public float getImplodeScale(float tickDelta) {
+        return isImploding() ? 1 - (getImplodeTicks(tickDelta) / IMPLODE_TICKS) : 1;
     }
 
     @Override
@@ -94,7 +100,7 @@ public class KevinEntity extends Entity {
 
             if (!getWorld().isClient() && implodeTicks > IMPLODE_TICKS) {
                 getWorld().sendEntityStatus(this, EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES);
-                var itemEntity = new ItemEntity(getWorld(), getX(), getY(), getZ(), XomItems.POLYCARB_SHEET.getDefaultStack(), 0, 0, 0);
+                var itemEntity = new ItemEntity(getWorld(), getX(), getBodyY(0.5) - EntityType.ITEM.getHeight(), getZ(), XomItems.POLYCARB_SHEET.getDefaultStack(), 0, 0, 0);
                 itemEntity.setToDefaultPickupDelay();
                 itemEntity.setNoGravity(true);
                 getWorld().spawnEntity(itemEntity);
@@ -113,7 +119,7 @@ public class KevinEntity extends Entity {
     @Override
     public void handleStatus(byte status) {
         if (status == EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES) {
-            getWorld().addFireworkParticle(getX(), getY(), getZ(), 0, 0, 0, FIREWORK);
+            getWorld().addFireworkParticle(getX(), getBodyY(0.5), getZ(), 0, 0, 0, FIREWORK);
             return;
         }
         super.handleStatus(status);
