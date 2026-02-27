@@ -24,8 +24,8 @@ import org.jetbrains.annotations.Nullable;
 public class DuctTapeBlock extends Block {
     public static final Property<Direction.Axis> AXIS = Properties.HORIZONTAL_AXIS;
 
-    public static final VoxelShape SHAPE_X = createCuboidShape(0, 0, 6, 16, 1, 10);
-    public static final VoxelShape SHAPE_Z = createCuboidShape(6, 0, 0, 10, 1, 16);
+    public static final VoxelShape SHAPE_X = createCuboidShape(0, 0, 5, 16, 1, 11);
+    public static final VoxelShape SHAPE_Z = createCuboidShape(5, 0, 0, 11, 1, 16);
 
     public DuctTapeBlock(Settings settings) {
         super(settings);

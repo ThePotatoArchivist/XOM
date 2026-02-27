@@ -4,9 +4,10 @@
   - [ ] Record Sound
 - [x] Kevin
   - [x] Kevin Core
-  - [ ] Duct Tape
+  - [x] Duct Tape
     - [ ] Textures
-    - [ ] Roll of Duct Tape
+    - [x] Roll of Duct Tape
+- [ ] jij myarm
 
 --- 
 old
