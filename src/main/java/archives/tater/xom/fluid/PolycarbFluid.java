@@ -3,6 +3,7 @@ package archives.tater.xom.fluid;
 import archives.tater.xom.registry.XomBlocks;
 import archives.tater.xom.registry.XomFluids;
 import archives.tater.xom.registry.XomItems;
+import archives.tater.xom.registry.XomParticles;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -11,6 +12,7 @@ import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.state.StateManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -18,6 +20,8 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
+
+import org.jetbrains.annotations.Nullable;
 
 public abstract class PolycarbFluid extends FlowableFluid {
 
@@ -81,6 +85,11 @@ public abstract class PolycarbFluid extends FlowableFluid {
     @Override
     public boolean matchesType(Fluid fluid) {
         return fluid == getStill() || fluid == getFlowing();
+    }
+
+    @Override
+    protected @Nullable ParticleEffect getParticle() {
+        return XomParticles.DRIPPING_POLYCARB;
     }
 
     public static class Flowing extends PolycarbFluid {

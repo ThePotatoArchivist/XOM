@@ -35,6 +35,7 @@ public class Xom implements ModInitializer {
 		XomFluids.init();
 		XomItems.init();
 		XomEntities.init();
+		XomParticles.init();
 
 		ConeSummoning.registerCallbacks();
 

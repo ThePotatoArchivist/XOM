@@ -1,0 +1,7 @@
+classTweaker v1 named
+accessible class net/minecraft/client/particle/BlockLeakParticle$ContinuousFalling
+accessible class net/minecraft/client/particle/BlockLeakParticle$Dripping
+accessible class net/minecraft/client/particle/BlockLeakParticle$Landing
+accessible method net/minecraft/client/particle/BlockLeakParticle$Dripping <init> (Lnet/minecraft/client/world/ClientWorld;DDDLnet/minecraft/fluid/Fluid;Lnet/minecraft/particle/ParticleEffect;)V
+accessible method net/minecraft/client/particle/BlockLeakParticle$ContinuousFalling <init> (Lnet/minecraft/client/world/ClientWorld;DDDLnet/minecraft/fluid/Fluid;Lnet/minecraft/particle/ParticleEffect;)V
+accessible method net/minecraft/client/particle/BlockLeakParticle$Landing <init> (Lnet/minecraft/client/world/ClientWorld;DDDLnet/minecraft/fluid/Fluid;)V

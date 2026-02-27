@@ -3,6 +3,7 @@ package archives.tater.xom.mixin;
 import archives.tater.xom.fluid.PolycarbFluid;
 import archives.tater.xom.registry.XomBlocks;
 import archives.tater.xom.registry.XomFluids;
+import archives.tater.xom.registry.XomParticles;
 
 import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
@@ -17,6 +18,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.block.BlockState;
@@ -24,6 +26,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.PointedDripstoneBlock;
 import net.minecraft.block.enums.Thickness;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -99,5 +102,13 @@ public abstract class PointedDripstoneBlockMixin {
         world.setBlockState(dripstonePos, XomBlocks.CONE.getDefaultState());
         ci.cancel();
         return originalResult;
+    }
+
+    @ModifyVariable(
+            method = "createParticle(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Lnet/minecraft/fluid/Fluid;)V",
+            at = @At("STORE")
+    )
+    private static ParticleEffect polycarbParticle(ParticleEffect value, @Local(argsOnly = true) Fluid fluid) {
+        return fluid.matchesType(XomFluids.LIQUID_POLYCARB) ? XomParticles.DRIPPING_POLYCARB : value;
     }
 }

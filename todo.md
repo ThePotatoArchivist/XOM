@@ -1,13 +1,14 @@
-- [ ] Liquid Polycarb Texture
+- [x] Liquid Polycarb Texture
 - [x] Smoked Polycarb
 - [x] Polycarb Sheet in chest slot
   - [ ] Record Sound
 - [x] Kevin
   - [x] Kevin Core
   - [x] Duct Tape
-    - [ ] Textures
+    - [x] Textures
     - [x] Roll of Duct Tape
 - [ ] jij myarm
+- [ ] drips
 
 --- 
 old
