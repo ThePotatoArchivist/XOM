@@ -11,5 +11,7 @@
   "item.xom.liquid_polycarb_bucket": "Bucket of Liquid Polycarb",
   "item.xom.polycarb_sheet": "Polycarb Sheet",
   "item.xom.smoked_polycarb": "Smoked Polycarb",
-  "item.xom.smoked_polycarb.tooltip": "Useless"
+  "item.xom.smoked_polycarb.tooltip": "Useless",
+  "subtitles.entity.xom.cone.throw": "Cone flies",
+  "subtitles.entity.xom.polycarb_hit": "Polycarb rattles"
 }

@@ -30,7 +30,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
             at = @At("RETURN")
     )
     private SoundEvent polycarbHurtSound(SoundEvent original) {
-        // TODO record sound
-        return getEquippedStack(EquipmentSlot.CHEST).isOf(XomItems.POLYCARB_SHEET) ? XomSounds.CONE_LAND : original;
+        return getEquippedStack(EquipmentSlot.CHEST).isOf(XomItems.POLYCARB_SHEET) ? XomSounds.POLYCARB_HIT : original;
     }
 }

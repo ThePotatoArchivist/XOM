@@ -36,6 +36,9 @@ public class XomSounds {
     public static final SoundEvent CONE_LAND = register("block.cone.land");
     public static final SoundEvent CONE_FALLS = register("block.cone.falls");
 
+    public static final SoundEvent CONE_THROW = register("entity.cone.throw");
+    public static final SoundEvent POLYCARB_HIT = register("entity.polycarb_hit");
+
     public static void init() {
 
     }

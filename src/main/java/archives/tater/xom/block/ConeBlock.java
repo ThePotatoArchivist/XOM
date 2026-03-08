@@ -5,6 +5,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
@@ -96,8 +97,13 @@ public class ConeBlock extends Block {
         if (down.isOf(this) && down.get(STACKED) > 3)
             if (state.get(STACKED) < 3)
                 world.breakBlock(pos.down(), true);
-            else
-                world.setBlockState(pos, state.with(STACKED, max(down.get(STACKED) - 4, 0)));
+            else {
+                Runnable replaceTip = () -> world.setBlockState(pos, state.with(STACKED, max(down.get(STACKED) - 4, 0)));
+                if (world instanceof ServerWorld serverWorld)
+                    serverWorld.getServer().execute(replaceTip);
+                else
+                    replaceTip.run();
+            }
     }
 
     @Override

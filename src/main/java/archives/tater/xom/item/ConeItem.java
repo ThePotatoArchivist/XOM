@@ -12,7 +12,6 @@ import net.minecraft.item.Equipment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
@@ -56,7 +55,7 @@ public class ConeItem extends BlockItem implements Equipment {
         if (user.getItemUseTime() < MIN_USE_TIME) return;
 
         user.swingHand(user.getActiveHand());
-        user.playSound(SoundEvents.ENTITY_EGG_THROW); // TODO custom sound event
+        user.playSound(XomSounds.CONE_THROW);
 
         if (world.isClient) return;
 

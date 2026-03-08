@@ -32,5 +32,7 @@ public class LangGenerator extends FabricLanguageProvider {
         translationBuilder.add(XomEntities.KEVIN, "Kevin");
         translationBuilder.add("death.attack.xom.cone", "%s was conespicuously killed by %s");
         translationBuilder.add("death.attack.xom.cone.item", "%s was conespicuously killed by %s using %s");
+        translationBuilder.add("subtitles.entity.xom.cone.throw", "Cone flies");
+        translationBuilder.add("subtitles.entity.xom.polycarb_hit", "Polycarb rattles");
     }
 }
