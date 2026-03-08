@@ -58,5 +58,19 @@
       { "name": "xom:cone_drop", "pitch": 1.1 }
     ],
     "subtitle": "subtitles.item.xom.cone.equip"
+  },
+  "entity.cone.throw": {
+    "sounds": [
+      "random/bow"
+    ],
+    "subtitle": "subtitles.entity.xom.cone.throw"
+  },
+  "entity.polycarb_hit": {
+    "sounds": [
+      "xom:polycarb_hit1",
+      "xom:polycarb_hit2",
+      "xom:polycarb_hit3"
+    ],
+    "subtitle": "subtitles.entity.xom.polycarb_hit"
   }
 }
