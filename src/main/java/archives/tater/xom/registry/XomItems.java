@@ -34,7 +34,7 @@ public class XomItems {
 
     public static final Item POLYCARB_SHEET = register("polycarb_sheet", new PolycarbSheetItem(new Item.Settings()
             .attributeModifiers(AttributeModifiersComponent.builder()
-                    .add(EntityAttributes.GENERIC_ARMOR, new EntityAttributeModifier(Identifier.ofVanilla("armor." + ArmorItem.Type.HELMET.getName()), 4, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
+                    .add(EntityAttributes.GENERIC_ARMOR, new EntityAttributeModifier(Identifier.ofVanilla("armor." + ArmorItem.Type.CHESTPLATE.getName()), 4, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
                     .build())
     ));
 
