@@ -1,4 +1,4 @@
-classTweaker v1 named
+accessWidener v2 named
 accessible class net/minecraft/client/particle/BlockLeakParticle$ContinuousFalling
 accessible class net/minecraft/client/particle/BlockLeakParticle$Dripping
 accessible class net/minecraft/client/particle/BlockLeakParticle$Landing

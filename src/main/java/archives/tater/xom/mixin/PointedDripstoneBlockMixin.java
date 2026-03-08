@@ -5,27 +5,24 @@ import archives.tater.xom.registry.XomBlocks;
 import archives.tater.xom.registry.XomFluids;
 import archives.tater.xom.registry.XomParticles;
 
-import com.llamalad7.mixinextras.expression.Definition;
-import com.llamalad7.mixinextras.expression.Expression;
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Cancellable;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.objectweb.asm.Opcodes;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.PointedDripstoneBlock;
 import net.minecraft.block.enums.Thickness;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
@@ -56,25 +53,28 @@ public abstract class PointedDripstoneBlockMixin {
     @Final
     public static BooleanProperty WATERLOGGED;
 
-    @Definition(id = "fluid", local = @Local(type = Fluid.class))
-    @Definition(id = "WATER", field = "Lnet/minecraft/fluid/Fluids;WATER:Lnet/minecraft/fluid/FlowableFluid;")
-    @Expression("fluid == WATER")
-    @WrapOperation(
+    @ModifyVariable(
             method = "dripTick",
-            at = @At("MIXINEXTRAS:EXPRESSION:FIRST")
+            at = @At(value = "FIELD:FIRST", target = "Lnet/minecraft/fluid/Fluids;WATER:Lnet/minecraft/fluid/FlowableFluid;", opcode = Opcodes.GETSTATIC)
     )
-    private static boolean allowPolycarbFluid(Object left, Object right, Operation<Boolean> original, @Share("polycarb") LocalBooleanRef polycarb) {
-        if (original.call(left, right)) return true;
-        if (left != XomFluids.LIQUID_POLYCARB) return false;
+    private static Fluid allowPolycarbFluid(Fluid fluid, @Share("polycarb") LocalBooleanRef polycarb) {
+        if (fluid != XomFluids.LIQUID_POLYCARB) return fluid;
         polycarb.set(true);
-        return true;
+        return Fluids.WATER;
     }
 
-    @Definition(id = "f", local = @Local(type = float.class, ordinal = 1))
-    @Expression("f = @(?)")
-    @ModifyExpressionValue(
+    @ModifyVariable(
             method = "dripTick",
-            at = @At("MIXINEXTRAS:EXPRESSION:FIRST")
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/block/PointedDripstoneBlock;getTipPos(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/WorldAccess;Lnet/minecraft/util/math/BlockPos;IZ)Lnet/minecraft/util/math/BlockPos;")
+    )
+    private static Fluid fixFluid(Fluid fluid, @Share("polycarb") LocalBooleanRef polycarb) {
+        return polycarb.get() ? XomFluids.LIQUID_POLYCARB : fluid;
+    }
+
+    @ModifyVariable(
+            method = "dripTick",
+            ordinal = 1,
+            at = @At("STORE")
     )
     private static float polycarbFluidChance(float original, @Share("polycarb") LocalBooleanRef polycarb) {
         return polycarb.get() ? PolycarbFluid.DRIP_CHANCE : original;
@@ -104,9 +104,11 @@ public abstract class PointedDripstoneBlockMixin {
         return originalResult;
     }
 
+    @Dynamic
     @ModifyVariable(
-            method = "createParticle(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Lnet/minecraft/fluid/Fluid;)V",
-            at = @At("STORE")
+            method = "Lnet/minecraft/world/level/block/PointedDripstoneBlock;spawnDripParticle(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/Fluid;)V",
+            at = @At("STORE"),
+            remap = false
     )
     private static ParticleEffect polycarbParticle(ParticleEffect value, @Local(argsOnly = true) Fluid fluid) {
         return fluid.matchesType(XomFluids.LIQUID_POLYCARB) ? XomParticles.DRIPPING_POLYCARB : value;

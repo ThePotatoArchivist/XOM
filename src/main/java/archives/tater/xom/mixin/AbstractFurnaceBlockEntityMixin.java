@@ -12,11 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.collection.DefaultedList;
-
-import org.jetbrains.annotations.Nullable;
 
 @Mixin(AbstractFurnaceBlockEntity.class)
 public class AbstractFurnaceBlockEntityMixin {
@@ -25,7 +21,7 @@ public class AbstractFurnaceBlockEntityMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private static void allowPolycarbRecipe(DynamicRegistryManager registryManager, @Nullable RecipeEntry<?> recipe, DefaultedList<ItemStack> slots, int count, CallbackInfoReturnable<Boolean> cir) {
+    private static void allowPolycarbRecipe(CallbackInfoReturnable<Boolean> cir, @Local(argsOnly = true) DefaultedList<ItemStack> slots) {
         if (slots.getFirst().isOf(XomItems.POLYCARB_SHEET) && slots.get(1).isOf(Items.BUCKET))
             cir.setReturnValue(true);
     }
@@ -34,7 +30,7 @@ public class AbstractFurnaceBlockEntityMixin {
             method = "craftRecipe",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;decrement(I)V")
     )
-    private static void performPolycarbRecipe(DynamicRegistryManager registryManager, @Nullable RecipeEntry<?> recipe, DefaultedList<ItemStack> slots, int count, CallbackInfoReturnable<Boolean> cir) {
+    private static void performPolycarbRecipe(CallbackInfoReturnable<Boolean> cir, @Local(argsOnly = true) DefaultedList<ItemStack> slots) {
         if (slots.getFirst().isOf(XomItems.POLYCARB_SHEET) && slots.get(1).isOf(Items.BUCKET))
             slots.set(1, XomItems.POLYCARB_BUCKET.getDefaultStack());
     }

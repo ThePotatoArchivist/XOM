@@ -16,6 +16,7 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+    mavenLocal()
 	maven { url 'https://jitpack.io' }
 }
 
@@ -29,7 +30,7 @@ loom {
 		}
 	}
 
-	accessWidenerPath = file("src/main/resources/xom.classtweaker")
+	accessWidenerPath = file("src/main/resources/xom.accesswidener")
 }
 
 fabricApi {
@@ -47,7 +48,7 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-	modImplementation include("com.github.ThePotatoArchivist:MyArm:${project.myarm_version}")
+	modImplementation include("archives.tater.myarm:myarm:${project.myarm_version}")
 }
 
 processResources {
