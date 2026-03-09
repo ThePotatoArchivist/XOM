@@ -36,7 +36,7 @@ public class ConeSummoning {
     public static void checkSummon(ServerWorld world, BlockPos candlePos) {
         for (var startOffset : REQUIRED_POSITIONS) {
             var centerPos = candlePos.add(startOffset).add(0, -1, 0);
-            if (isValidStructure(world, centerPos)) {
+            if (isValidStructure(world, centerPos) && world.isSkyVisible(centerPos) && world.getBlockState(centerPos).isReplaceable()) {
                 startSummon(world, centerPos);
                 return;
             }
