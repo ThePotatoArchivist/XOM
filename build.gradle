@@ -48,7 +48,7 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-	modImplementation include("archives.tater.myarm:myarm:${project.myarm_version}")
+	modImplementation include("com.github.ThePotatoArchivist:MyArm:${project.myarm_version}")
 }
 
 processResources {
