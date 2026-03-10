@@ -24,7 +24,7 @@ public class LangGenerator extends FabricLanguageProvider {
         translationBuilder.add(XomBlocks.DUCT_TAPE, "Duct Tape");
         translationBuilder.add(XomItems.POLYCARB_SHEET, "Polycarb Sheet");
         translationBuilder.add(XomItems.SMOKED_POLYCARB, "Smoked Polycarb");
-        translationBuilder.add(SmokedPolycarbSheetItem.TOOLTIP, "Useless");
+        translationBuilder.add(SmokedPolycarbSheetItem.TOOLTIP, "Not very conical");
         translationBuilder.add(XomItems.DUCT_TAPE_ROLL, "Roll of Duct Tape");
         translationBuilder.add(XomItems.POLYCARB_BUCKET, "Bucket of Liquid Polycarb");
         translationBuilder.add(XomItems.KEVIN_CORE, "Kevin Core");
